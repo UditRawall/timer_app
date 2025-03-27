@@ -1,4 +1,4 @@
-TIMMER APP: 
+# TIMMER APP 🕛: 
 
 Core Functionality
 
@@ -17,7 +17,7 @@ Core Functionality
 -Bulk category actions
 -Real-time progress tracking
 
-Advanced Features:
+# Advanced Features:
 
 Timer history log
 Completion notifications
@@ -40,7 +40,7 @@ npm or Yarn
 Expo CLI
 Expo Go App (for mobile testing):
 
-Features I will add in the future:
+# Features I will add in the future:
 - sound notifications
 - Dark/Light themes
 - Add more customization options
