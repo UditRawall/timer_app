@@ -1,74 +1,105 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  AppState,
+  TouchableOpacity,
+} from "react-native";
+import { useTimers } from "../../src/hooks/useTimers";
+import { CategoryGroup } from "../../src/components/CategoryGroup";
+import { CompletionModal } from "../../src/components/CompletionModal";
+import { DEFAULT_CATEGORIES } from "../../src/constant/categories";
+import { Timer } from "@/src/types/Timer";
+import "../globals.css";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
+  const {
+    activeTimers,
+    startTimer,
+    pauseTimer,
+    resetTimer,
+    startCategoryTimers,
+    pauseCategoryTimers,
+    resetCategoryTimers,
+    updateTimerProgress,
+  } = useTimers();
+
+  const [completedTimerName, setCompletedTimerName] = useState<string | null>(
+    null
+  );
+
+  // Timer tick logic
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    const handleTimerTick = () => {
+      activeTimers.forEach((timer) => {
+        if (timer.status === "running" && timer.remainingTime > 0) {
+          updateTimerProgress(timer.id, timer.remainingTime - 1);
+        } else if (timer.remainingTime === 0 && timer.status !== "completed") {
+          setCompletedTimerName(timer.name);
+        }
+      });
+    };
+
+    // Start interval if any timer is running
+    if (activeTimers.some((timer) => timer.status === "running")) {
+      intervalId = setInterval(handleTimerTick, 1000);
+    }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [activeTimers]);
+
+  // Group timers by category
+  const groupedTimers = activeTimers.reduce((acc, timer) => {
+    if (!acc[timer.category]) {
+      acc[timer.category] = [];
+    }
+    acc[timer.category].push(timer);
+    return acc;
+  }, {} as Record<string, Timer[]>);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View className="flex-1 bg-gray-100 p-4">
+      {activeTimers.length === 0 ? (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-xl text-gray-500 text-center">
+            OOPS ! No timers created. Add a new timer to get started!
+          </Text>
+          <TouchableOpacity
+            className="bg-primary p-4 rounded-lg items-center mt-4"
+            // onPress={handleCreateTimer}
+          >
+            <Link href='/(tabs)/create'><Text className="text-white text-lg font-bold">Create Timer</Text></Link>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <ScrollView>
+          {Object.entries(groupedTimers).map(([category, timers]) => (
+            <CategoryGroup
+              key={category}
+              category={category}
+              timers={timers}
+              onStartCategory={() => startCategoryTimers(category)}
+              onPauseCategory={() => pauseCategoryTimers(category)}
+              onResetCategory={() => resetCategoryTimers(category)}
+              onStartTimer={startTimer}
+              onPauseTimer={pauseTimer}
+              onResetTimer={resetTimer}
+            />
+          ))}
+        </ScrollView>
+      )}
+
+      <CompletionModal
+        visible={!!completedTimerName}
+        timerName={completedTimerName || ""}
+        onClose={() => setCompletedTimerName(null)}
+      />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
