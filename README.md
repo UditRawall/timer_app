@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+TIMMER APP: 
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Core Functionality
 
-## Get started
+-Create custom timers with:
 
-1. Install dependencies
+-Personalized names
+-Custom durations
+-Categorization
 
-   ```bash
+
+-Group timers by categories
+-Individual timer controls:
+   -Start
+   -Pause
+   -Reset
+-Bulk category actions
+-Real-time progress tracking
+
+Advanced Features:
+
+Timer history log
+Completion notifications
+Categorized timer management
+Responsive design
+
+🛠 Technology Stack
+
+React Native
+Expo
+NativeWind (Tailwind CSS)
+TypeScript
+AsyncStorage
+Expo Router
+
+📱 Prerequisites
+
+Node.js (v16+)
+npm or Yarn
+Expo CLI
+Expo Go App (for mobile testing):
+
+Features I will add in the future:
+- sound notifications
+- Dark/Light themes
+- Add more customization options
+- will try to make this app more productive. 
+
+
+SETUP :
+
+1. Clone the Repository
+   git clone https://github.com/UditRawall/timer_app.git
+   cd timer_app
+
+2. Install Dependencies
    npm install
-   ```
+# or
+yarn install
+3. Configure Development Environment
 
-2. Start the app
+Install Expo CLI globally:
 
-   ```bash
-    npx expo start
-   ```
+ npm install -g expo-cli
+# or
+yarn global add expo-cli
 
-In the output, you'll find options to open the app in a
+4. Run the Application
+   npx expo start
+# or
+yarn expo start
+📲 Running on Devices iOS
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Install Expo Go app from App Store
+Scan QR code in terminal
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Android
 
-## Get a fresh project
+Install Expo Go from Google Play Store
+Scan QR code in terminal
 
-When you're ready, run:
+Web
 
-```bash
-npm run reset-project
-```
+Run npx expo start --web:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
