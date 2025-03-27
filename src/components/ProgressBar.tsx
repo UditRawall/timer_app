@@ -15,7 +15,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   total,
   height = 10,
   backgroundColor = '#E0E0E0',
-  fillColor = '#4CAF50'
+  fillColor = '#C68EFD'
 }) => {
   const percentage = calculatePercentage(current, total);
 

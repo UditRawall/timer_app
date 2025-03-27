@@ -8,7 +8,7 @@ export default function AppLayout() {
       screenOptions={{
         headerStyle: { backgroundColor: '#f4f4f4' },
         headerTitleStyle: { fontWeight: 'bold' },
-        tabBarActiveTintColor: '#3B82F6',
+        tabBarActiveTintColor: '#C68EFD',
         tabBarInactiveTintColor: '#6B7280',
         tabBarStyle: { 
           paddingBottom: 8, 

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Timer } from '../types/Timer';
 import { TimerItem } from './TimerItem';
 import { ChevronDown, ChevronUp } from 'lucide-react-native';
+import '../../app/globals.css';
 
 interface CategoryGroupProps {
   category: string;
@@ -28,23 +29,23 @@ export const CategoryGroup: React.FC<CategoryGroupProps> = ({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <View className="mb-4 bg-white rounded-lg shadow-md">
+    <View className="mb-10 bg-white rounded-lg shadow-md">
       <TouchableOpacity 
         onPress={() => setIsExpanded(!isExpanded)}
-        className="flex-row justify-between items-center p-4 bg-gray-100 rounded-t-lg"
+        className="flex-row justify-between items-center p-4 bg-grey-100 rounded-t-lg"
       >
         <View className="flex-row items-center space-x-2">
           <Text className="text-xl font-bold">{category}</Text>
           <Text className="text-gray-500">({timers.length} timers)</Text>
         </View>
         
-        <View className="flex-row space-x-2">
+        <View className="flex-row gap-2 space-x-2 p-2">
           <TouchableOpacity 
             onPress={(e) => {
               e.stopPropagation();
               onStartCategory();
             }}
-            className="bg-green-500 px-3 py-1 rounded"
+            className="px-3 py-1 rounded"
           >
             <Text className="text-black">Start All</Text>
           </TouchableOpacity>

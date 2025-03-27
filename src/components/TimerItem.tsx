@@ -27,7 +27,7 @@ export const TimerItem: React.FC<TimerItemProps> = ({
   };
 
   return (
-    <View className="bg-white p-4 rounded-lg mb-3 shadow-md">
+    <View className="bg-[#C68EFD] p-4 rounded-lg mb-3 shadow-md">
       <View className="flex-row justify-between items-center mb-2">
         <Text className="text-lg font-bold">{timer.name}</Text>
         <Text className={`${getStatusColor()} capitalize`}>
@@ -35,42 +35,42 @@ export const TimerItem: React.FC<TimerItemProps> = ({
         </Text>
       </View>
       
-      <View className="mb-3">
+      <View className="mb-5">
         <ProgressBar 
           current={timer.remainingTime} 
           total={timer.duration} 
         />
       </View>
       
-      <View className="flex-row justify-between items-center">
+      <View className="flex-row justify-between items-center mt-4">
         <Text className="text-xl font-semibold">
           {formatTime(timer.remainingTime)}
         </Text>
         
-        <View className="flex-row space-x-2">
+        <View className="flex flex-row space-x-2 ">
           {timer.status !== 'running' && (
             <TouchableOpacity 
               onPress={onStart} 
-              className="bg-green-500 px-3 py-2 rounded"
+              className="bg-primary p-3 rounded-lg"
             >
-              <Text className="text-black">Start</Text>
+              <Text className="text-white">Start</Text>
             </TouchableOpacity>
           )}
           
           {timer.status === 'running' && (
             <TouchableOpacity 
               onPress={onPause} 
-              className="bg-yellow-500 px-3 py-2 rounded"
+              className="bg-primary p-3 rounded-lg"
             >
-              <Text className="text-black">Pause</Text>
+              <Text className="text-white">Pause</Text>
             </TouchableOpacity>
           )}
           
           <TouchableOpacity 
             onPress={onReset} 
-            className="bg-gray-300 px-3 py-2 rounded"
+            className="bg-secondary p-3 rounded-lg border-red-500"
           >
-            <Text className="text-black">Reset</Text>
+            <Text className="text-black px-4">Reset</Text>
           </TouchableOpacity>
         </View>
       </View>
